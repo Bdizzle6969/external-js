@@ -1,0 +1,9 @@
+#+TITLE:       FMOYT External Javascript
+#+AUTHOR:      FMOYT Collaboration
+#+DESCRIPTION: Contains external javascript files
+#+KEYWORDS:    fmoyt, cytube
+#+LANGUAGE:    en
+#+OPTIONS:     H:2 num:t toc:t \n:nil ::t |:t ^:nil f:t tex:t
+
+This repository contains the external javascript for the
+FullMoviesOnYoutube channels.
