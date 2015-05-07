@@ -1,7 +1,10 @@
-$.getScript("http://fmoyt.github.io/external-js/parseEmbeds.js");
+//Text Effect Libraries
 $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
-$.getScript("https://dl.dropboxusercontent.com/s/u2qsd3jkn9x4ibu/external.js");
 $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
+
+//Additional Includes
+$.getScript("http://fmoyt.github.io/external-js/parseEmbeds.js");
+$.getScript("http://fmoyt.github.io/external-js/libs.js");
 
 addModconsole();
 function addModconsole() {
