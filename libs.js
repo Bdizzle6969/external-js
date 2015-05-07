@@ -10,41 +10,38 @@ if (document.getElementById("countdown")) {
     element.parentNode.removeChild(element);
 }
 
-var countdown = $("<div/>").addClass("hasCountdown")
+var countdown = $("<div/>")
+    .addClass("hasCountdown")
     .attr("id", "countdown")
     .appendTo("#videowrap");
 
 var getTimeButton = $("<button/>").attr("id", "timebutton")
     .addClass("btn btn-small")
     .click(function () {
-        alert(new Date().getTime() + 10000);})
+        alert(new Date().getTime() + 10000);
+    })
     .text("Get system time")
     .appendTo("#qualitywrap");
-hideStuff();
 
-function hideStuff()
-{
-    socket.on("channelOpts", function()
-	      {
-		  if (CLIENT.rank >= 2) 
-		  {
-                      $("#librarytoggle").css("display","inherit");
-                      getTimeButton.css("display","inline");
-		  }
-		  else 
-		  { 
-		      $(".qe_title").contents().unwrap();
-		      $("A.qe_title").contents().unwrap();
-		      $("#librarytoggle").css("display","none");
-		      getTimeButton.css("display", "none");
-		  }
-	      });
+hideStuff();
+function hideStuff() {
+    socket.on("channelOpts", function() {
+	if (CLIENT.rank >= 2) {
+            $("#librarytoggle").css("display","inherit");
+            getTimeButton.css("display","inline");
+	}
+	else { 
+	    $(".qe_title").contents().unwrap();
+	    $("A.qe_title").contents().unwrap();
+	    $("#librarytoggle").css("display","none");
+	    getTimeButton.css("display", "none");
+	}
+    });
 }
 
 var endTime = startTime + (movieLengthSeconds * 1000);
+
 var t = setInterval(timer, 1000);
-
-
 function timer() {
     if (movieLengthSeconds <= 0 || new Date().getTime() >= endTime) {
         clearInterval(t);
@@ -64,17 +61,26 @@ function timer() {
         seconds = minusHours - minutes * 60;
         countdown.text("Current time: " + hours + " hours " + minutes +" minutes " + seconds + " seconds");
     }
-    else if (movieLengthSeconds >= 60) 
+    else if (movieLengthSeconds >= 60) {
         countdown.text("Current time: " + minutes + " minutes  " + seconds + " seconds");
-    else
+    }
+    else {
         countdown.text("Current time: " + movieLengthSeconds + " seconds");
+    }
 }
 
 
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+(function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+	(i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a,m)
+})(window,document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
 ga('create', 'UA-39666007-2', 'cytu.be');
 ga('send', 'pageview');
@@ -82,8 +88,7 @@ ga('send', 'pageview');
 
 addWallet();
 function addWallet() {
-    if( $('.perdclick').length == 0 )         // if element not there, bitch
-    {
+    if ($('.perdclick').length == 0) { // if element not there, bitch
         var objTo = document.getElementById('leftcontrols')
         var modspan = document.createElement("span");
         var uname = CLIENT.name;
@@ -92,42 +97,37 @@ function addWallet() {
     }
 }  
 
-$( ".perdclick" ).click(function() {
-    $( '#perdframe' ).attr( 'src', function ( i, val ) { return val; });
-}); 
+$(".perdclick").click(function() {
+    $('#perdframe').attr('src', function (i, val) {
+	return val;
+    });
+});
 
-
-
-//wzrd i changed this to do opposite because it was F'ing up  
+//wzrd I changed this to do opposite because it was F'ing up  
 displayShowSearch();
-function displayShowSearch()
-{
-    socket.on("channelOpts", function()
-	      {
-		  if (CLIENT.rank < 2) 
-		  {    
-		      $("#showsearch").hide();
-		  }
-	      });
+function displayShowSearch() {
+    socket.on("channelOpts", function() {
+	if (CLIENT.rank < 2) {    
+	    $("#showsearch").hide();
+	}
+    });
 } 
 
 dizzflair();
-function dizzflair(){
-    socket.on("chatMsg", function() 
-	      {
-		  sucko();
-		  webmVideo();
-		  $('.channel-emote').prop('title', '');
-		  $('.userlist_owner:contains("wzrd")').addClass('wizz');
-		  $('.username:contains("wzrd")').addClass('wizz');
-		  $('.imp').parent().parent().find('.wizz').remove();
-		  $('.username:contains("blankoid")').remove();
-		  $('.userlist_owner:contains("csagan")').addClass('csagan');
-		  $('.username:contains("csagan")').addClass('csagan');
-		  $('.userlist_op:contains("mikmik")').addClass('mikmik');
-		  $('.username:contains("mikmik")').addClass('mikmik');
-
-	      });
+function dizzflair() {
+    socket.on("chatMsg", function() {
+	sucko();
+	webmVideo();
+	$('.channel-emote').prop('title', '');
+	$('.userlist_owner:contains("wzrd")').addClass('wizz');
+	$('.username:contains("wzrd")').addClass('wizz');
+	$('.imp').parent().parent().find('.wizz').remove();
+	$('.username:contains("blankoid")').remove();
+	$('.userlist_owner:contains("csagan")').addClass('csagan');
+	$('.username:contains("csagan")').addClass('csagan');
+	$('.userlist_op:contains("mikmik")').addClass('mikmik');
+	$('.username:contains("mikmik")').addClass('mikmik');	
+    });
 }
 
 // Close Drink Start
@@ -138,7 +138,6 @@ $(document).ready(function(){
 
 //
 var button = document.getElementById('drinkclosebtn');
-
 button.onclick = function() {
     var div = document.getElementById('drinkbarwrap');
     if (div.style.display !== 'none') {
