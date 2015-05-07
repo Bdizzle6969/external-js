@@ -3,9 +3,8 @@ $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
 $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
 
 //Additional Includes
-$.getScript("http://fmoyt.github.io/external-js/parseEmbeds.js");
-//$.getScript("http://fmoyt.github.io/external-js/libs.js");
-require("./libs.js");
+require("./libs/embed-utils.js");
+require("./libs/misc.js");
 
 addModconsole();
 function addModconsole() {
