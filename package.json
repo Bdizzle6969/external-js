@@ -1,0 +1,35 @@
+{
+  "name": "fmoyt-external-js",
+  "version": "1.0.0",
+  "description": "full movies on youtube external javascript",
+  "main": "main.js",
+  "private": "true",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^10.1.1",
+    "gulp": "^3.8.11",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-util": "^3.0.4",
+    "lodash.assign": "^3.1.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FMOYT/external-js.git"
+  },
+  "keywords": [
+    "fmoyt",
+    "cytube"
+  ],
+  "author": "FMOYT Collaborators",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FMOYT/external-js/issues"
+  },
+  "homepage": "https://github.com/FMOYT/external-js"
+}

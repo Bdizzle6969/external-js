@@ -4,7 +4,8 @@ $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lett
 
 //Additional Includes
 $.getScript("http://fmoyt.github.io/external-js/parseEmbeds.js");
-$.getScript("http://fmoyt.github.io/external-js/libs.js");
+//$.getScript("http://fmoyt.github.io/external-js/libs.js");
+require("./libs.js");
 
 addModconsole();
 function addModconsole() {

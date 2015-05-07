@@ -7,3 +7,32 @@
 
 This repository contains the external javascript for the
 FullMoviesOnYoutube channels.
+
+* Development Setup HowTo
+  - Install git, and clone this repository
+  - Install [[https://nodejs.org/][nodejs]], and add the location of *npm* to your PATH
+    environment variable
+  - Install [[http://gulpjs.com/][gulp]]
+  - Install these dependencies through npm by calling
+    #+BEGIN_SRC js
+    npm install
+    #+END_SRC
+
+    From here, you can run *gulp js* to start watching and generating
+    the out/fmoyt-external.js file
+
+** Development server
+   To monitor development and test changes you perform on the code,
+   you need to start a node server at the root of the github
+   repository
+   
+   #+BEGIN_SRC js
+   npm install -g http-server
+   http-server -p 80
+   #+END_SRC
+
+   Then you can browse to the webpage
+   [[http://cytu.be/r/fullmoviesonyoutubedev]]
+
+   This page looks for the external js and external css through your
+   local server on port 80.
