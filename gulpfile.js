@@ -37,6 +37,6 @@ function bundle() {
     .pipe(source('fmoyt-external.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true})) 
-    .pipe(sourcemaps.write('./out'))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./out'));
 }
