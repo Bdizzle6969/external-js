@@ -113,6 +113,23 @@ function displayShowSearch() {
     });
 } 
 
+function sucko() {
+    var fek = $('.b3g3:last').text();
+    if (fek.length > 1) {
+	fek2 = "url('" + fek +"')";
+    }
+    else {
+	fek2 = "none"
+    }
+    $("#messagebuffer").css("background-image",fek2);
+}
+
+function webmVideo() {
+    var widgetHTML = $('span.vid').text();
+    $('span.vid').html('<video src="'+widgetHTML+'" controls></video>');
+    $('span.vid').addClass('convertedvid').removeClass('vid');
+}
+
 dizzflair();
 function dizzflair() {
     socket.on("chatMsg", function() {

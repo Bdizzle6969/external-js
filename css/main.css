@@ -1447,3 +1447,11 @@ h6 {
 #chanjs-allow {
     background: rgb(19, 184, 48);
 }
+
+.spenabled2 {
+    background-color: #37EB60;
+}
+
+.spenabled2:hover {
+    background-color: #37EB60;
+}

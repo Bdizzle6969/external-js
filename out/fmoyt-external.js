@@ -3,109 +3,36 @@
 $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
 $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
 
-//Additional Includes
+//Random Includes
+//TODO: Cleanup
 require("./libs/embed-utils.js");
 require("./libs/misc.js");
 
-addModconsole();
-function addModconsole() {
-    if (CLIENT.rank >= 2 && $('#modconsole').length == 0) {
-	var unamed = CLIENT.name;
-	var moddiv = "<div id='modconsole'><div id='modopentab'><img src='http://i.imgur.com/ln3Ser1.png' style='vertical-align: -2px;opacity: 0.8;'> FMOYT Mod Console<iframe src='http://192.241.120.73/con/lastmsg/lastmsg.php' style='height:20px; width:40%;float:right;border:none;' scrolling='no'></iframe></div><div id='modtabs'><ul><li><a href='#a'><img src='http://i.imgur.com/CPxO4hE.png' style='vertical-align: -2px;opacity: 0.4;height: 14px;'> Mod Notes</a></li><li><a href='#b' class='logclick'><img src='http://i.imgur.com/goTiGiB.png' style='height: 14px;vertical-align: -2px;opacity: 0.5;'> Movie Log</a></li><li><a href='#c' class='linkclick'><img src='http://i.imgur.com/8ww6lKl.png' style='height: 16px;vertical-align: -5px;'> Movie Links</a></li><li><a href='#d' class='motdclick'><img src='http://i.imgur.com/Qp54UA7.png' style='height: 14px;vertical-align: -3px;opacity: 1;'> MOTD</a></li><li><a href='#e' class='imdbclick'><img src='https://cdn1.iconfinder.com/data/icons/jigsoar-icons/16/_search.png' style='height: 14px;vertical-align: -3px;opacity: 1;'> IMDB</a></li><li><a href='#f' class='guideclick'><img src='https://cdn3.iconfinder.com/data/icons/iconic-1/32/info-16.png' style='height: 14px;vertical-align: -2px;opacity: 1;'> Secret Bot Commands</a></li><li><a href='#g' class='guideclick' class='calendarclick'><img src='https://cdn3.iconfinder.com/data/icons/iconic-1/32/info-16.png' style='height: 14px;vertical-align: -2px;opacity: 1;'> Movie Night Calendar</a></li></ul><div id='a'><iframe height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/chat/chat.php?uname=" + unamed + "'style='border:none;' scrolling='no'></iframe></div><div id='b'><iframe id='logframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/movielog/update.php?uname=" + unamed + "'style='border:none;'></iframe></div><div id='c'><iframe id='linkframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/linklist/update.php?uname=" + unamed + "'style='border:none;'></iframe></div><div id='d'><iframe id='motdframe' height='100%' width='100%' frameborder='0' src='https://dl.dropboxusercontent.com/s/36o7pblbxifofm6/banner.html' style='border:none;'></iframe></div><div id='e'><iframe id='imdbframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/imdbsearch/index.html' style='border:none;'></iframe></div><div id='f'><iframe height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/guidelines/index.html'style='border:none;' scrolling='no'></iframe></div><div id='g'><iframe id='calendarframe' height='100%' width='100%' frameborder='0' src='http://teamup.com/ksf2883bd29e015cbc'style='border:none;' scrolling='yes'></iframe></div></div></div>";
-	$( "#pmbar" ).after(moddiv);
-	$("#pmbar").addClass("modpmbar");
-	$("#modtabs").tabs();
-	$( "#modopentab" ).click(function() {
-	    var modtabs = $( "#modtabs" );
-	    if (modtabs.is( ":visible" )){
-		
-		modtabs.slideUp( 200 );
-                
-		
-	    } else {
-		modtabs.slideDown( 200 );
-	    }
-	});
+//UI Modifications
+require("./libs/ui/mod-console.js");
+require("./libs/ui/trivia-toggle.js");
 
-	$( ".logclick" ).click(function() {
-	    $( "#logframe" ).attr( 'src', function ( i, val ) { return val; });
-	}); 
+//Chat Handlers
+require("./libs/chat_handlers/drink-flair.js");
+require("./libs/chat_handlers/audio-speakz.js");
 
-	$( ".linkclick" ).click(function() {
-	    $( "#linkframe" ).attr( 'src', function ( i, val ) { return val; });
-	}); 
-
-	$( ".motdclick" ).click(function() {
-	    $( "#motdframe" ).attr( 'src', function ( i, val ) { return val; });
-	}); 
-
-	$( ".calendarclick" ).click(function() {
-	    $( "#calendarframe" ).attr( 'src', function ( i, val ) { return val; });
-	}); 
-    }
-}  
-
-function videoclick() {
-    if (CLIENT.rank >= 2) {    
-        $("#queue").css("pointer-events","visible");   
-    }
-    else { 
-	$("#queue").css("pointer-events","none");             
-    }
-    
-    $("#videowrap").css("pointer-events","auto");      
-} 
-
-videoclick();
-
-HideShadowMute();
-function HideShadowMute() {
-    var objTo = document.getElementById('leftcontrols')
-    var modspan = document.createElement("span");
-    modspan.innerHTML = "<button id='trivtog' class='btn btn-sm btn-default'>  Trivia/Jumble: On</button>"
-    objTo.appendChild(modspan);
-}
-
-
-$("#trivtog").click((function() {
-    var interId = null;
-    var $ul = $("#timet ul");
-    return function(e) {
-        if (interId) {
-            $(this).text("Trivia/Jumble: On");
-            clearInterval(interId);
-            interId = null;
-	    $(".hiddenbotchat").attr('class', 'shownbotchat');
-        }
-	else {
-            $(this).text("Trivia/Jumble: Off");
-            interId = setInterval(function() {
-		$('.botchat').parent().parent('div').attr('class', 'hiddenbotchat');
-            }, 1);        
-        }
-    };
-}()));
-
-drinkflair();
-function drinkflair(){
-    socket.on("drinkCount", function() {
-	setTimeout(function() {
-	    $('#drinkbar h1 span').remove();
-	    lelcat = $('#drinkbar h1').text().replace('drinks','');
-	    $('#drinkbar h1').text(lelcat);
-	    lelcat = $('#drinkbar h1').text().replace('drink','');
-	    $('#drinkbar h1').text(lelcat);
-	    $('#drinkbar h1').append($('.drink span').last().clone());
-	    $('#drinkbar h1 span').append("<img src='http://i.imgur.com/gFQutcV.gif' />");
-	}, 2000);
-    });
-}
-
-
+//Redirect synchtube.me users to the new cytu.be site
 if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
     location.href = location.protocol + "//cytu.be" + location.pathname;
 }
 
+
+videoclick();
+function videoclick() {
+    if (CLIENT.rank >= 2) {    
+        $("#queue").css("pointer-events","visible");
+    }
+    else { 
+	$("#queue").css("pointer-events","none");          
+    }
+    
+    $("#videowrap").css("pointer-events","auto");
+} 
 
 removemiddlescreen();
 function removemiddlescreen(){
@@ -115,18 +42,6 @@ function removemiddlescreen(){
 	}
     });
 }
-
-function sucko() {
-    var fek = $('.b3g3:last').text();
-    if (fek.length > 1) {
-	fek2 = "url('" + fek +"')";
-    }
-    else {
-	fek2 = "none"
-    }
-    $("#messagebuffer").css("background-image",fek2);
-}
-
 
 hoverSound();
 function hoverSound() {
@@ -160,31 +75,11 @@ function appendNotifybar() {
     }
 }
 
-function webmVideo() {
-    var widgetHTML = $('span.vid').text();
-    $('span.vid').html('<video src="'+widgetHTML+'" controls></video>');
-    $('span.vid').addClass('convertedvid').removeClass('vid');
-}
-
 $('#newpollbtn').click(function () {
-    $("#pollwrap .checkbox input[type=checkbox]").prop("checked", true);
+    $("#pollwrap .checkbox input[type=checkbox]").attr("checked", true);
 });
 
-$(document).ready(function() {
-    videoclick();
-    if ($('#stopaudiobutton').length != 0){
-	return;
-    }
-    else {
-	$('#leftcontrols').prepend('<span class="btn btn-sm btn-default" style="float: right;" id="stopaudiobutton">Stop Audio</span>');
-	$( "#stopaudiobutton" ).click(function() {
-	    var audioElements = document.getElementsByTagName('audio');
-	    for(var i = 0; i < audioElements.length; ++i){
-		audioElements[i].pause();
-	    }
-	}); 
-    }
-});
+
 
 $( ".motdclick" ).click(function() {
     $("#motdframe").attr('src', function (i, val) {
@@ -193,14 +88,13 @@ $( ".motdclick" ).click(function() {
 }); 
 
 
-//Cleaned here too. Note that Mod console will not load when added in external.
-
 //apply username classes to usernames, hook this to chatMsg so it refreshes
 classApplier();
 function classApplier() {
     $('.userlist_item span:nth-child(2)').each(function() {
 	$(this).addClass($(this).text())
     });
+    
     $('.username').each(function() {
 	$(this).addClass($(this).text().slice(0,-2))
     })
@@ -215,7 +109,6 @@ function b3g3(){
 socket.on("chatMsg", function() {
     classApplier();
     b3g3();
-    speakz2();
     $('#boatskip').click(function() {
 	socket.emit("voteskip")
     });
@@ -224,6 +117,29 @@ socket.on("chatMsg", function() {
 	$('#memers3').remove();
     });
 });
+
+
+
+//Create a custom event called 'external-load' that fires as soon as
+//this external javascript is done firing
+var ExternalLoadEvent = document.createEvent('Event');
+ExternalLoadEvent.initEvent("external-load", true, true);
+document.dispatchEvent(ExternalLoadEvent);
+
+},{"./libs/chat_handlers/audio-speakz.js":2,"./libs/chat_handlers/drink-flair.js":3,"./libs/embed-utils.js":4,"./libs/misc.js":5,"./libs/ui/mod-console.js":6,"./libs/ui/trivia-toggle.js":7}],2:[function(require,module,exports){
+
+if ($('#stopaudiobutton').length != 0){
+    return;
+}
+else {
+    $('#leftcontrols').prepend('<span class="btn btn-sm btn-default" style="float: right;" id="stopaudiobutton">Stop Audio</span>');
+    $( "#stopaudiobutton" ).click(function() {
+	var audioElements = document.getElementsByTagName('audio');
+	for(var i = 0; i < audioElements.length; ++i){
+	    audioElements[i].pause();
+	}
+    }); 
+}
 
 function speakz2() {
     if (!$('.speakz2').length){
@@ -250,13 +166,40 @@ function addsptoggle() {
     });
 }
 
-//Create a custom event called 'external-load' that fires as soon as
-//the external javascript is done firing
-var ExternalLoadEvent = document.createEvent('Event');
-ExternalLoadEvent.initEvent("external-load", true, true);
-document.dispatchEvent(ExternalLoadEvent);
+socket.on("chatMsg", function() {
+    speakz2(); 
+})
 
-},{"./libs/embed-utils.js":2,"./libs/misc.js":3}],2:[function(require,module,exports){
+module.exports = {
+    
+}
+
+},{}],3:[function(require,module,exports){
+
+var __drink_timeout_handler = null;
+
+drinkflair();
+
+function drinkflair(){
+    socket.on("drinkCount", function() {
+	clearTimeout(__drink_timeout_handler);
+	__drink_timeout_handler = setTimeout(function() {
+	    $('#drinkbar h1 span').remove();
+	    lelcat = $('#drinkbar h1').text().replace('drinks','');
+	    $('#drinkbar h1').text(lelcat);
+	    lelcat = $('#drinkbar h1').text().replace('drink','');
+	    $('#drinkbar h1').text(lelcat);
+	    $('#drinkbar h1').append($('.drink span').last().clone());
+	    $('#drinkbar h1 span').append("<img src='http://i.imgur.com/gFQutcV.gif' />");
+	}, 2000);
+    });
+}
+
+module.exports = {
+    
+};
+
+},{}],4:[function(require,module,exports){
 function parse_VideoEmbeds() {
     $("img.webm").each(function(index) {
         var img2vid = this;
@@ -332,7 +275,7 @@ module.exports = {
 
 }
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 $(".navbar-brand").text("Full Movies");
 
 var movieLengthSeconds = 6545; //length of the movie in seconds
@@ -448,6 +391,23 @@ function displayShowSearch() {
     });
 } 
 
+function sucko() {
+    var fek = $('.b3g3:last').text();
+    if (fek.length > 1) {
+	fek2 = "url('" + fek +"')";
+    }
+    else {
+	fek2 = "none"
+    }
+    $("#messagebuffer").css("background-image",fek2);
+}
+
+function webmVideo() {
+    var widgetHTML = $('span.vid').text();
+    $('span.vid').html('<video src="'+widgetHTML+'" controls></video>');
+    $('span.vid').addClass('convertedvid').removeClass('vid');
+}
+
 dizzflair();
 function dizzflair() {
     socket.on("chatMsg", function() {
@@ -485,6 +445,85 @@ button.onclick = function() {
 module.exports = {
     
 };
+
+},{}],6:[function(require,module,exports){
+/*
+  Includes all of the code for setting up the mod console
+*/
+
+addModconsole();
+function addModconsole() {
+    if (CLIENT.rank >= 2 && $('#modconsole').length == 0) {
+	var unamed = CLIENT.name;
+	var moddiv = "<div id='modconsole'><div id='modopentab'><img src='http://i.imgur.com/ln3Ser1.png' style='vertical-align: -2px;opacity: 0.8;'> FMOYT Mod Console<iframe src='http://192.241.120.73/con/lastmsg/lastmsg.php' style='height:20px; width:40%;float:right;border:none;' scrolling='no'></iframe></div><div id='modtabs'><ul><li><a href='#a'><img src='http://i.imgur.com/CPxO4hE.png' style='vertical-align: -2px;opacity: 0.4;height: 14px;'> Mod Notes</a></li><li><a href='#b' class='logclick'><img src='http://i.imgur.com/goTiGiB.png' style='height: 14px;vertical-align: -2px;opacity: 0.5;'> Movie Log</a></li><li><a href='#c' class='linkclick'><img src='http://i.imgur.com/8ww6lKl.png' style='height: 16px;vertical-align: -5px;'> Movie Links</a></li><li><a href='#d' class='motdclick'><img src='http://i.imgur.com/Qp54UA7.png' style='height: 14px;vertical-align: -3px;opacity: 1;'> MOTD</a></li><li><a href='#e' class='imdbclick'><img src='https://cdn1.iconfinder.com/data/icons/jigsoar-icons/16/_search.png' style='height: 14px;vertical-align: -3px;opacity: 1;'> IMDB</a></li><li><a href='#f' class='guideclick'><img src='https://cdn3.iconfinder.com/data/icons/iconic-1/32/info-16.png' style='height: 14px;vertical-align: -2px;opacity: 1;'> Secret Bot Commands</a></li><li><a href='#g' class='guideclick' class='calendarclick'><img src='https://cdn3.iconfinder.com/data/icons/iconic-1/32/info-16.png' style='height: 14px;vertical-align: -2px;opacity: 1;'> Movie Night Calendar</a></li></ul><div id='a'><iframe height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/chat/chat.php?uname=" + unamed + "'style='border:none;' scrolling='no'></iframe></div><div id='b'><iframe id='logframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/movielog/update.php?uname=" + unamed + "'style='border:none;'></iframe></div><div id='c'><iframe id='linkframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/linklist/update.php?uname=" + unamed + "'style='border:none;'></iframe></div><div id='d'><iframe id='motdframe' height='100%' width='100%' frameborder='0' src='https://dl.dropboxusercontent.com/s/36o7pblbxifofm6/banner.html' style='border:none;'></iframe></div><div id='e'><iframe id='imdbframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/imdbsearch/index.html' style='border:none;'></iframe></div><div id='f'><iframe height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/guidelines/index.html'style='border:none;' scrolling='no'></iframe></div><div id='g'><iframe id='calendarframe' height='100%' width='100%' frameborder='0' src='http://teamup.com/ksf2883bd29e015cbc'style='border:none;' scrolling='yes'></iframe></div></div></div>";
+	$( "#pmbar" ).after(moddiv);
+	$("#pmbar").addClass("modpmbar");
+	$("#modtabs").tabs();
+	$( "#modopentab" ).click(function() {
+	    var modtabs = $( "#modtabs" );
+	    if (modtabs.is( ":visible" )){
+		
+		modtabs.slideUp( 200 );
+                
+		
+	    } else {
+		modtabs.slideDown( 200 );
+	    }
+	});
+
+	$( ".logclick" ).click(function() {
+	    $( "#logframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+
+	$( ".linkclick" ).click(function() {
+	    $( "#linkframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+
+	$( ".motdclick" ).click(function() {
+	    $( "#motdframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+
+	$( ".calendarclick" ).click(function() {
+	    $( "#calendarframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+    }
+}
+
+module.exports = {
+    
+};
+
+},{}],7:[function(require,module,exports){
+/*
+  Trivia Toggle Button
+ */
+
+HideShadowMute();
+function HideShadowMute() {
+    var objTo = document.getElementById('leftcontrols')
+    var modspan = document.createElement("span");
+    modspan.innerHTML = "<button id='trivtog' class='btn btn-sm btn-default'>  Trivia/Jumble: On</button>"
+    objTo.appendChild(modspan);
+}
+
+$("#trivtog").click((function() {
+    var interId = null;
+    var $ul = $("#timet ul");
+    return function(e) {
+        if (interId) {
+            $(this).text("Trivia/Jumble: On");
+            clearInterval(interId);
+            interId = null;
+	    $(".hiddenbotchat").attr('class', 'shownbotchat');
+        }
+	else {
+            $(this).text("Trivia/Jumble: Off");
+            interId = setInterval(function() {
+		$('.botchat').parent().parent('div').attr('class', 'hiddenbotchat');
+            }, 1);        
+        }
+    };
+}()));
 
 },{}]},{},[1])
 
