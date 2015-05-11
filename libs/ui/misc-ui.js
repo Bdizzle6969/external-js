@@ -10,6 +10,11 @@ function appendNotifybar() {
     }
 }
 
+//IDK what this does...
+$('#newpollbtn').click(function () {
+    $("#pollwrap .checkbox input[type=checkbox]").attr("checked", true);
+});
+
 module.exports = {
 
 };

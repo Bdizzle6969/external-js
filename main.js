@@ -21,6 +21,7 @@ require("./libs/ui/misc-ui.js");
 //
 //Chat Handlers
 //
+var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
 require("./libs/chat_handlers/drink-flair.js");
 require("./libs/chat_handlers/audio-speakz.js");
 require("./libs/chat_handlers/hover-sound.js");
@@ -33,19 +34,21 @@ require("./libs/chat_handlers/nick-class-applier.js");
 // - Middlescreen Removal
 require("./libs/chat_handlers/misc-handlers.js");
 
+/* Intialization */
+FMOYT = {};
+
+//Chat Handler Initialization
+FMOYT.chatHandler = new ChatHandler();
+FMOYT.chatHandler.init();
+FMOYT.chatHandler.add("echo", function(data) {
+    console.log("data", data);
+});
+
+
 //Redirect synchtube.me users to the new cytu.be site
 if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
     location.href = location.protocol + "//cytu.be" + location.pathname;
 }
-
-
-$('#newpollbtn').click(function () {
-    $("#pollwrap .checkbox input[type=checkbox]").attr("checked", true);
-});
-
-
-
-
 
 //Create a custom event called 'external-load' that fires as soon as
 //this external javascript is done firing
