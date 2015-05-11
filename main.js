@@ -2,6 +2,9 @@
 $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
 $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
 
+//Text HTML Manipulation Library
+$.getScript("http://benzap.github.io/DOM.Barf/DOM.Barf.js");
+
 //Random Includes
 //TODO: Cleanup
 require("./libs/embed-utils.js");
@@ -18,11 +21,11 @@ require("./libs/ui/trivia-toggle.js");
 require("./libs/ui/misc-ui.js");
 
 
+var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
 //
 //Chat Handlers
 //
-var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
-require("./libs/chat_handlers/drink-flair.js");
+var DrinkFlair = require("./libs/chat_handlers/drink-flair.js");
 require("./libs/chat_handlers/audio-speakz.js");
 require("./libs/chat_handlers/hover-sound.js");
 require("./libs/chat_handlers/boatskip.js");
@@ -40,9 +43,9 @@ FMOYT = {};
 //Chat Handler Initialization
 FMOYT.chatHandler = new ChatHandler();
 FMOYT.chatHandler.init();
-FMOYT.chatHandler.add("echo", function(data) {
-    console.log("data", data);
-});
+
+//Handlers
+FMOYT.chatHandler.add("drink-flair", DrinkFlair.handler);
 
 
 //Redirect synchtube.me users to the new cytu.be site

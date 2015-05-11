@@ -1,6 +1,9 @@
 /*
   Drink Flair and chatMsg fixes
  */
+var DOM = require("../DOM.Barf.js").DOM;
+var _s = DOM.Barf;
+_s.span = _s.toSpit("span");
 
 var __drinkCount = 0;
 
@@ -17,6 +20,7 @@ socket.on("drinkCount", function(count) {
     */
 });
 
+var __timeoutHandler = null;
 var handler = function(data) {
     var div = data.div;
     if ($(div).hasClass("drink")) {
@@ -27,9 +31,15 @@ var handler = function(data) {
 	spanText.innerHTML = msg;
 
 	//apply to header
-	var drinkBar = document.querySelector("#drinkbar h1");
-	console.log("drinkbar", drinkBar);
-	
+	var drinkBar = document.querySelector("#drinkcount");
+	var innerContent = _s.ToRaw([
+	    _s.span({"class": "drink"}, [
+		__drinkCount.toString() + " ",
+		msg,
+		_s.img({src: "http://i.imgur.com/gFQutcV.gif"})
+	    ]),
+	]);
+	drinkBar.innerHTML = innerContent;
     }
 }
 
