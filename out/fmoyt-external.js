@@ -8,13 +8,31 @@ $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lett
 require("./libs/embed-utils.js");
 require("./libs/misc.js");
 
+//
 //UI Modifications
+//
 require("./libs/ui/mod-console.js");
 require("./libs/ui/trivia-toggle.js");
 
+//Miscellaneous UI Handlers
+// - NotifyBar
+require("./libs/ui/misc-ui.js");
+
+
+//
 //Chat Handlers
+//
 require("./libs/chat_handlers/drink-flair.js");
 require("./libs/chat_handlers/audio-speakz.js");
+require("./libs/chat_handlers/hover-sound.js");
+require("./libs/chat_handlers/boatskip.js");
+require("./libs/chat_handlers/background-changer.js");
+require("./libs/chat_handlers/nick-class-applier.js");
+
+//Miscellaneous Handlers
+// - VideoClick Playlist
+// - Middlescreen Removal
+require("./libs/chat_handlers/misc-handlers.js");
 
 //Redirect synchtube.me users to the new cytu.be site
 if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
@@ -22,101 +40,11 @@ if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
 }
 
 
-videoclick();
-function videoclick() {
-    if (CLIENT.rank >= 2) {    
-        $("#queue").css("pointer-events","visible");
-    }
-    else { 
-	$("#queue").css("pointer-events","none");          
-    }
-    
-    $("#videowrap").css("pointer-events","auto");
-} 
-
-removemiddlescreen();
-function removemiddlescreen(){
-    socket.on("chatMsg", function() {
-	if ($('.removemiddlescreen').length > 0) {
-	    $('.middlescreen, .removemiddlescreen').remove();
-	}
-    });
-}
-
-hoverSound();
-function hoverSound() {
-    socket.on("chatMsg", function(args) {
-	var sucko = $('.hoversound7').last().text();
-	var soundlink = 'http://' + sucko;
-	$('.hoversound7').last().parent().append('<audio id="gifaudio"><source src="'+soundlink+'" type="audio/mpeg">');
-
-	$('#gifaudio').parent().append('<img src="http://i.imgur.com/4XgmiHM.png" height="20px"/>');
-	$('#gifaudio').parent().on('click', function() {
-	    var boobs = $(this).find('audio');
-	    boobs[0].volume=.4;
-	    boobs[0].play();
-	});
-	$('.hoversound7').remove();
-	$('#gifaudio').attr('id','giffedaudio');
-
-    });
-}
-
-appendNotifybar();
-
-function appendNotifybar() {
-
-    if( $('#notifybar').length == 0 ) {
-	$('#chatheader').append('<span id="notifybar"></span>');
-    }
-
-    if( $('#notifymarquee').length == 0 ) {
-	$('#notifybar').append('<marquee id="notifymarquee" behavior="scroll" direction="left"></marquee>');
-    }
-}
-
 $('#newpollbtn').click(function () {
     $("#pollwrap .checkbox input[type=checkbox]").attr("checked", true);
 });
 
 
-
-$( ".motdclick" ).click(function() {
-    $("#motdframe").attr('src', function (i, val) {
-	return val;
-    });
-}); 
-
-
-//apply username classes to usernames, hook this to chatMsg so it refreshes
-classApplier();
-function classApplier() {
-    $('.userlist_item span:nth-child(2)').each(function() {
-	$(this).addClass($(this).text())
-    });
-    
-    $('.username').each(function() {
-	$(this).addClass($(this).text().slice(0,-2))
-    })
-	}
-
-b3g3();
-function b3g3(){
-    $('#messagebuffer').css("background-image","url("+$('.b3g3:last').text()+")");
-}
-
-//hook into the chatMsg frame
-socket.on("chatMsg", function() {
-    classApplier();
-    b3g3();
-    $('#boatskip').click(function() {
-	socket.emit("voteskip")
-    });
-    $('#memers3').click(function() {
-	socket.emit("chatMsg", {"msg":":dankredhat:"});
-	$('#memers3').remove();
-    });
-});
 
 
 
@@ -126,7 +54,7 @@ var ExternalLoadEvent = document.createEvent('Event');
 ExternalLoadEvent.initEvent("external-load", true, true);
 document.dispatchEvent(ExternalLoadEvent);
 
-},{"./libs/chat_handlers/audio-speakz.js":2,"./libs/chat_handlers/drink-flair.js":3,"./libs/embed-utils.js":4,"./libs/misc.js":5,"./libs/ui/mod-console.js":6,"./libs/ui/trivia-toggle.js":7}],2:[function(require,module,exports){
+},{"./libs/chat_handlers/audio-speakz.js":2,"./libs/chat_handlers/background-changer.js":3,"./libs/chat_handlers/boatskip.js":4,"./libs/chat_handlers/drink-flair.js":5,"./libs/chat_handlers/hover-sound.js":6,"./libs/chat_handlers/misc-handlers.js":7,"./libs/chat_handlers/nick-class-applier.js":8,"./libs/embed-utils.js":9,"./libs/misc.js":10,"./libs/ui/misc-ui.js":11,"./libs/ui/mod-console.js":12,"./libs/ui/trivia-toggle.js":13}],2:[function(require,module,exports){
 
 if ($('#stopaudiobutton').length != 0){
     return;
@@ -175,6 +103,29 @@ module.exports = {
 }
 
 },{}],3:[function(require,module,exports){
+b3g3();
+function b3g3(){
+    $('#messagebuffer').css("background-image","url("+$('.b3g3:last').text()+")");
+}
+
+socket.on("chatMsg", function() {
+    b3g3();
+});
+
+},{}],4:[function(require,module,exports){
+
+
+socket.on("chatMsg", function() {
+    $('#boatskip').click(function() {
+	socket.emit("voteskip")
+    });
+});
+
+module.exports = {
+
+};
+
+},{}],5:[function(require,module,exports){
 
 var __drink_timeout_handler = null;
 
@@ -199,7 +150,90 @@ module.exports = {
     
 };
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
+hoverSound();
+function hoverSound() {
+    socket.on("chatMsg", function(args) {
+	var sucko = $('.hoversound7').last().text();
+	var soundlink = 'http://' + sucko;
+	$('.hoversound7').last().parent().append('<audio id="gifaudio"><source src="'+soundlink+'" type="audio/mpeg">');
+
+	$('#gifaudio').parent().append('<img src="http://i.imgur.com/4XgmiHM.png" height="20px"/>');
+	$('#gifaudio').parent().on('click', function() {
+	    var boobs = $(this).find('audio');
+	    boobs[0].volume=.4;
+	    boobs[0].play();
+	});
+	$('.hoversound7').remove();
+	$('#gifaudio').attr('id','giffedaudio');
+
+    });
+}
+
+module.exports = {
+
+};
+
+},{}],7:[function(require,module,exports){
+
+//Prevent Users from clicking on video URLs in the playlist
+videoclick();
+function videoclick() {
+    if (CLIENT.rank >= 2) {    
+        $("#queue").css("pointer-events","visible");
+    }
+    else { 
+	$("#queue").css("pointer-events","none");          
+    }
+    
+    $("#videowrap").css("pointer-events","auto");
+}
+
+//Remove some middle screen thing... IDK
+removemiddlescreen();
+function removemiddlescreen(){
+    socket.on("chatMsg", function() {
+	if ($('.removemiddlescreen').length > 0) {
+	    $('.middlescreen, .removemiddlescreen').remove();
+	}
+    });
+}
+
+socket.on("chatMsg", function() {
+    $('#memers3').click(function() {
+	socket.emit("chatMsg", {"msg":":dankredhat:"});
+	$('#memers3').remove();
+    });
+});
+
+
+module.exports = {
+    
+};
+
+},{}],8:[function(require,module,exports){
+//apply username classes to usernames, hook this to chatMsg so it refreshes
+classApplier();
+function classApplier() {
+    $('.userlist_item span:nth-child(2)').each(function() {
+	$(this).addClass($(this).text())
+    });
+    
+    $('.username').each(function() {
+	$(this).addClass($(this).text().slice(0,-2))
+    })
+	}
+
+//hook into the chatMsg frame
+socket.on("chatMsg", function() {
+    classApplier();
+});
+
+module.exports = {
+
+};
+
+},{}],9:[function(require,module,exports){
 function parse_VideoEmbeds() {
     $("img.webm").each(function(index) {
         var img2vid = this;
@@ -275,7 +309,7 @@ module.exports = {
 
 }
 
-},{}],5:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 $(".navbar-brand").text("Full Movies");
 
 var movieLengthSeconds = 6545; //length of the movie in seconds
@@ -446,7 +480,24 @@ module.exports = {
     
 };
 
-},{}],6:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+//Adds Notify Bar area for scrolling text
+appendNotifybar();
+function appendNotifybar() {
+    if( $('#notifybar').length == 0 ) {
+	$('#chatheader').append('<span id="notifybar"></span>');
+    }
+
+    if( $('#notifymarquee').length == 0 ) {
+	$('#notifybar').append('<marquee id="notifymarquee" behavior="scroll" direction="left"></marquee>');
+    }
+}
+
+module.exports = {
+
+};
+
+},{}],12:[function(require,module,exports){
 /*
   Includes all of the code for setting up the mod console
 */
@@ -493,7 +544,7 @@ module.exports = {
     
 };
 
-},{}],7:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*
   Trivia Toggle Button
  */
