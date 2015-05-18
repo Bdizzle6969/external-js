@@ -37,8 +37,10 @@ require("./libs/chat_handlers/nick-class-applier.js");
 // - Middlescreen Removal
 require("./libs/chat_handlers/misc-handlers.js");
 
-/* Intialization */
+
+/**** Initialization and Global Variables ****/
 FMOYT = {};
+DOM = require("./libs/DOM.Barf.js").DOM;
 
 //Chat Handler Initialization
 FMOYT.chatHandler = new ChatHandler();

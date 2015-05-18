@@ -3,6 +3,13 @@
 @import "http://fonts.googleapis.com/css?family=Open+Sans:400, 700, 600";
 @import "http://fonts.googleapis.com/css?family=Droid+Sans:400, 700";
 @import "http://fonts.googleapis.com/css?family=Coming+Soon";
+
+/* adding missing libs */
+/* FIXME: consider getting some of this stuff inline */
+@import url("https://dl.dropboxusercontent.com/s/lkbcmxrx6h54c0g/external.css");
+@import url("http://daneden.github.io/animate.css/animate.min.css");
+@import url("http://192.241.120.73/fmoyt/shake.css");
+
  body {
     background-color: #424242;
     background: #000 url(http://i.imgur.com/gPwHb3C.png);

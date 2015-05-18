@@ -38,8 +38,10 @@ require("./libs/chat_handlers/nick-class-applier.js");
 // - Middlescreen Removal
 require("./libs/chat_handlers/misc-handlers.js");
 
-/* Intialization */
+
+/**** Initialization and Global Variables ****/
 FMOYT = {};
+DOM = require("./libs/DOM.Barf.js").DOM;
 
 //Chat Handler Initialization
 FMOYT.chatHandler = new ChatHandler();
@@ -60,7 +62,7 @@ var ExternalLoadEvent = document.createEvent('Event');
 ExternalLoadEvent.initEvent("external-load", true, true);
 document.dispatchEvent(ExternalLoadEvent);
 
-},{"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/embed-utils.js":10,"./libs/misc.js":11,"./libs/ui/misc-ui.js":12,"./libs/ui/mod-console.js":13,"./libs/ui/trivia-toggle.js":14,"./libs/utils/chat.js":15}],2:[function(require,module,exports){
+},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/embed-utils.js":10,"./libs/misc.js":11,"./libs/ui/misc-ui.js":12,"./libs/ui/mod-console.js":13,"./libs/ui/trivia-toggle.js":14,"./libs/utils/chat.js":15}],2:[function(require,module,exports){
 /*
   Despite the name, this is a useful and straightforward library for
   generating a string representation from a composition of Barf functions
