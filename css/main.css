@@ -739,6 +739,7 @@ strong.wizz {
 }
 #drinkbar {
     height: 91px!important;
+    line-height: 91px;
 }
 .perdy {
     color: #28e!important;

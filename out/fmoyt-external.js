@@ -425,9 +425,16 @@ var __timeoutHandler = null;
 var handler = function(data) {
     var div = data.div;
     if ($(div).hasClass("drink")) {
-	//correct the inner text
-	var msg = "D" + data.msg;
-	
+	var msg = data.msg || "";
+
+	//more specific case when using /drink. This corrects it to act like /d
+	var re_drink = /^(rink|drink) (.*)$/
+	if (msg.match(re_drink)) {
+	    var m = msg.match(re_drink);
+
+	    msg = m[2];
+	}
+
 	var spanText = div.querySelectorAll("span")[2];
 	spanText.innerHTML = msg;
 
@@ -435,7 +442,7 @@ var handler = function(data) {
 	var drinkBar = document.querySelector("#drinkcount");
 	var innerContent = _s.ToRaw([
 	    _s.span({"class": "drink"}, [
-		__drinkCount.toString() + " ",
+		__drinkCount.toString() + " 🍺 ",
 		msg,
 		_s.img({src: "http://i.imgur.com/gFQutcV.gif"})
 	    ]),
