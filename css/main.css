@@ -32,13 +32,6 @@
     background-color: #000;
     color: #fff;
 }
-#userlist,
-#messagebuffer {
-    height: 347px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    border: 1px solid #aaa;
-}
 #countdown {
     display: none;
 }
@@ -128,6 +121,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     border: 3px solid rgba(170, 170, 170, 0);
+    background-image:cover;
 }
 .nick-hover {
     background-color: #131313!important;
