@@ -1458,3 +1458,25 @@ h6 {
 .spenabled2:hover {
     background-color: #37EB60;
 }
+
+strong.username.Turtleproof:after {
+content: "Turtlegoon: ";
+visibility: visible;
+margin-left: -5.7em;
+}
+strong.Turtleproof {
+visibility: hidden;
+}
+.turtleflair {
+    width: 110px;
+    height: 30px;
+    margin-top: 4px;
+    display: inline-block;
+    background: transparent url(http://i.imgur.com/7VYCPQJ.gif) no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    top: 4px;
+}
+.turtleflair:hover {
+    background-image: url(http://i.imgur.com/AvDFXQ5.gif);
+}
