@@ -155,12 +155,14 @@ $(document).ready(function(){
 
 //
 var button = document.getElementById('drinkclosebtn');
-button.onclick = function() {
-    var div = document.getElementById('drinkbarwrap');
-    if (div.style.display !== 'none') {
-        div.style.display = 'none';
-    }
-};
+if (button) {
+    button.onclick = function() {
+	var div = document.getElementById('drinkbarwrap');
+	if (div.style.display !== 'none') {
+            div.style.display = 'none';
+	}
+    };
+}
 
 // Close Drink End
 

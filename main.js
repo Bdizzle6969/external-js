@@ -13,13 +13,16 @@ require("./libs/misc.js");
 //
 //UI Modifications
 //
-require("./libs/ui/mod-console.js");
+
+//Remove since bdizzle left :(
+//require("./libs/ui/mod-console.js");
 require("./libs/ui/trivia-toggle.js");
+
 
 //Miscellaneous UI Handlers
 // - NotifyBar
 require("./libs/ui/misc-ui.js");
-
+var CountdownTicker = require("./libs/ui/countdown-ticker.js").CountdownTicker;
 
 var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
 //
@@ -39,7 +42,9 @@ require("./libs/chat_handlers/misc-handlers.js");
 
 
 /**** Initialization and Global Variables ****/
-FMOYT = {};
+FMOYT = {
+    CountdownTicker: new CountdownTicker(document.querySelector("#motdwrap")),
+}
 DOM = require("./libs/DOM.Barf.js").DOM;
 
 //Chat Handler Initialization
