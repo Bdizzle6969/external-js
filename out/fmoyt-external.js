@@ -30,6 +30,7 @@ var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
 //Chat Handlers
 //
 var DrinkFlair = require("./libs/chat_handlers/drink-flair.js");
+var Rainbow = require("./libs/chat_handlers/rainbow.js");
 require("./libs/chat_handlers/audio-speakz.js");
 require("./libs/chat_handlers/hover-sound.js");
 require("./libs/chat_handlers/boatskip.js");
@@ -54,7 +55,7 @@ FMOYT.chatHandler.init();
 
 //Handlers
 FMOYT.chatHandler.add("drink-flair", DrinkFlair.handler);
-
+FMOYT.chatHandler.add("rainbow", Rainbow.handler);
 
 //Redirect synchtube.me users to the new cytu.be site
 if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
@@ -67,7 +68,7 @@ var ExternalLoadEvent = document.createEvent('Event');
 ExternalLoadEvent.initEvent("external-load", true, true);
 document.dispatchEvent(ExternalLoadEvent);
 
-},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/embed-utils.js":10,"./libs/misc.js":11,"./libs/ui/countdown-ticker.js":12,"./libs/ui/misc-ui.js":13,"./libs/ui/trivia-toggle.js":14,"./libs/utils/chat.js":15}],2:[function(require,module,exports){
+},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/trivia-toggle.js":15,"./libs/utils/chat.js":16}],2:[function(require,module,exports){
 /*
   Despite the name, this is a useful and straightforward library for
   generating a string representation from a composition of Barf functions
@@ -547,6 +548,56 @@ module.exports = {
 };
 
 },{}],10:[function(require,module,exports){
+/*
+  add rainbow colors to text on screen
+*/
+var DOM = require("../DOM.Barf.js").DOM;
+var _s = DOM.Barf;
+_s.span = _s.toSpit("span");
+
+var rainbow_colors = [
+    "#EE4035",
+    "#F37737",
+    "#F9E97A",
+    "#7AC043",
+    "#9ED9F7",
+];
+
+var rainbow_index = 0;
+function get_next_color() {
+    var color = rainbow_colors[rainbow_index];
+    rainbow_index = (rainbow_index + 1) % rainbow_colors.length;
+    return color;
+}
+
+function create_rainbow(msg) {
+    var output = "";
+    for (var i = 0; i < msg.length; i++) {
+	var letter = msg[i];
+	output += _s.span({style: {color: get_next_color()}}, letter);
+    }
+    return output;
+}
+
+var handler = function(data) {
+    var div = data.div;
+    var msg = data.msg || "";
+
+    var re_rainbow = /^(.*):rainbow: ?(.*)$/;
+    if (msg.match(re_rainbow)) {
+	var m = msg.match(re_rainbow);
+	msg = m[1] + create_rainbow(m[2])
+	
+	var spanText = div.querySelectorAll("span")[1];
+	spanText.innerHTML = msg;
+    }
+}
+
+module.exports = {
+    handler: handler,
+}
+
+},{"../DOM.Barf.js":2}],11:[function(require,module,exports){
 function parse_VideoEmbeds() {
     $("img.webm").each(function(index) {
         var img2vid = this;
@@ -622,7 +673,7 @@ module.exports = {
 
 }
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 $(".navbar-brand").text("Full Movies");
 
 var movieLengthSeconds = 6545; //length of the movie in seconds
@@ -795,7 +846,7 @@ module.exports = {
     
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*
   countdown ticker to countdown to theme nights
 */
@@ -845,7 +896,7 @@ module.exports = {
     CountdownTicker: CountdownTicker,
 }
 
-},{"moment-timezone":17}],13:[function(require,module,exports){
+},{"moment-timezone":18}],14:[function(require,module,exports){
 //Adds Notify Bar area for scrolling text
 appendNotifybar();
 function appendNotifybar() {
@@ -867,7 +918,7 @@ module.exports = {
 
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*
   Trivia Toggle Button
  */
@@ -899,7 +950,7 @@ $("#trivtog").click((function() {
     };
 }()));
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*
   Includes a set of utility functions for manipulating and handling
   chat
@@ -1018,7 +1069,7 @@ module.exports = {
     ChatHandler: ChatHandler,
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports={
 	"version": "2015d",
 	"zones": [
@@ -1608,11 +1659,11 @@ module.exports={
 		"Pacific/Pohnpei|Pacific/Ponape"
 	]
 }
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var moment = module.exports = require("./moment-timezone");
 moment.tz.load(require('./data/packed/latest.json'));
 
-},{"./data/packed/latest.json":16,"./moment-timezone":18}],18:[function(require,module,exports){
+},{"./data/packed/latest.json":17,"./moment-timezone":19}],19:[function(require,module,exports){
 //! moment-timezone.js
 //! version : 0.4.0
 //! author : Tim Wood
@@ -2040,7 +2091,7 @@ moment.tz.load(require('./data/packed/latest.json'));
 	return moment;
 }));
 
-},{"moment":19}],19:[function(require,module,exports){
+},{"moment":20}],20:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors

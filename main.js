@@ -29,6 +29,7 @@ var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
 //Chat Handlers
 //
 var DrinkFlair = require("./libs/chat_handlers/drink-flair.js");
+var Rainbow = require("./libs/chat_handlers/rainbow.js");
 require("./libs/chat_handlers/audio-speakz.js");
 require("./libs/chat_handlers/hover-sound.js");
 require("./libs/chat_handlers/boatskip.js");
@@ -53,7 +54,7 @@ FMOYT.chatHandler.init();
 
 //Handlers
 FMOYT.chatHandler.add("drink-flair", DrinkFlair.handler);
-
+FMOYT.chatHandler.add("rainbow", Rainbow.handler);
 
 //Redirect synchtube.me users to the new cytu.be site
 if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
