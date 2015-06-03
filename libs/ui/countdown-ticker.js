@@ -38,7 +38,11 @@ CountdownTicker.prototype.tick = function() {
 
 CountdownTicker.prototype.getCountdown = function() {
     var thisMoment = moment.tz("America/Thunder_Bay");
-    var toCountdownString = thisMoment.to(moment().hours(this.hour-1));
+    var toCountdownString = thisMoment.to(
+	moment()
+	    .tz("America/Thunder_Bay")
+	    .hours(this.hour-1)
+    );
     
     return this.label + toCountdownString;
 }

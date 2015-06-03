@@ -1,3 +1,5 @@
+FMOYT_VERSION = "1.0.0";
+
 //Text Effect Libraries
 $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
 $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
@@ -66,3 +68,5 @@ if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
 var ExternalLoadEvent = document.createEvent('Event');
 ExternalLoadEvent.initEvent("external-load", true, true);
 document.dispatchEvent(ExternalLoadEvent);
+
+console.log("Loaded FMOYT: ", FMOYT_VERSION);

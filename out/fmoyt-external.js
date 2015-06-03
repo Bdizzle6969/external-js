@@ -1,4 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+FMOYT_VERSION = "1.0.0";
+
 //Text Effect Libraries
 $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
 $.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
@@ -67,6 +69,8 @@ if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
 var ExternalLoadEvent = document.createEvent('Event');
 ExternalLoadEvent.initEvent("external-load", true, true);
 document.dispatchEvent(ExternalLoadEvent);
+
+console.log("Loaded FMOYT: ", FMOYT_VERSION);
 
 },{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/trivia-toggle.js":15,"./libs/utils/chat.js":16}],2:[function(require,module,exports){
 /*
@@ -887,7 +891,11 @@ CountdownTicker.prototype.tick = function() {
 
 CountdownTicker.prototype.getCountdown = function() {
     var thisMoment = moment.tz("America/Thunder_Bay");
-    var toCountdownString = thisMoment.to(moment().hours(this.hour-1));
+    var toCountdownString = thisMoment.to(
+	moment()
+	    .tz("America/Thunder_Bay")
+	    .hours(this.hour-1)
+    );
     
     return this.label + toCountdownString;
 }
