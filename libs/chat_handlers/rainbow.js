@@ -2,6 +2,7 @@
   add rainbow colors to text on screen
 */
 var DOM = require("../DOM.Barf.js").DOM;
+var utils = require("../utils.js");
 var _s = DOM.Barf;
 _s.span = _s.toSpit("span");
 
@@ -21,10 +22,12 @@ function get_next_color() {
 }
 
 function create_rainbow(msg) {
+    msg = utils.unescapeHtml(msg);
+    
     var output = "";
     for (var i = 0; i < msg.length; i++) {
 	var letter = msg[i];
-	output += _s.span({style: {color: get_next_color()}}, letter);
+	output += _s.span({style: {color: get_next_color()}}, utils.escapeHtml(letter));
     }
     return output;
 }
@@ -37,9 +40,10 @@ var handler = function(data) {
     if (msg.match(re_rainbow)) {
 	var m = msg.match(re_rainbow);
 	msg = m[1] + create_rainbow(m[2])
-	
-	var spanText = div.querySelectorAll("span")[1];
-	spanText.innerHTML = msg;
+
+	var spans = div.querySelectorAll("span")
+	var spanText = spans[spans.length-1];
+	$(spanText).html(msg);
     }
 }
 

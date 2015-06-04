@@ -72,7 +72,7 @@ document.dispatchEvent(ExternalLoadEvent);
 
 console.log("Loaded FMOYT: ", FMOYT_VERSION);
 
-},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/trivia-toggle.js":15,"./libs/utils/chat.js":16}],2:[function(require,module,exports){
+},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/trivia-toggle.js":15,"./libs/utils/chat.js":17}],2:[function(require,module,exports){
 /*
   Despite the name, this is a useful and straightforward library for
   generating a string representation from a composition of Barf functions
@@ -556,6 +556,7 @@ module.exports = {
   add rainbow colors to text on screen
 */
 var DOM = require("../DOM.Barf.js").DOM;
+var utils = require("../utils.js");
 var _s = DOM.Barf;
 _s.span = _s.toSpit("span");
 
@@ -575,10 +576,12 @@ function get_next_color() {
 }
 
 function create_rainbow(msg) {
+    msg = utils.unescapeHtml(msg);
+    
     var output = "";
     for (var i = 0; i < msg.length; i++) {
 	var letter = msg[i];
-	output += _s.span({style: {color: get_next_color()}}, letter);
+	output += _s.span({style: {color: get_next_color()}}, utils.escapeHtml(letter));
     }
     return output;
 }
@@ -591,9 +594,10 @@ var handler = function(data) {
     if (msg.match(re_rainbow)) {
 	var m = msg.match(re_rainbow);
 	msg = m[1] + create_rainbow(m[2])
-	
-	var spanText = div.querySelectorAll("span")[1];
-	spanText.innerHTML = msg;
+
+	var spans = div.querySelectorAll("span")
+	var spanText = spans[spans.length-1];
+	$(spanText).html(msg);
     }
 }
 
@@ -601,7 +605,7 @@ module.exports = {
     handler: handler,
 }
 
-},{"../DOM.Barf.js":2}],11:[function(require,module,exports){
+},{"../DOM.Barf.js":2,"../utils.js":16}],11:[function(require,module,exports){
 function parse_VideoEmbeds() {
     $("img.webm").each(function(index) {
         var img2vid = this;
@@ -904,7 +908,7 @@ module.exports = {
     CountdownTicker: CountdownTicker,
 }
 
-},{"moment-timezone":18}],14:[function(require,module,exports){
+},{"moment-timezone":19}],14:[function(require,module,exports){
 //Adds Notify Bar area for scrolling text
 appendNotifybar();
 function appendNotifybar() {
@@ -959,6 +963,41 @@ $("#trivtog").click((function() {
 }()));
 
 },{}],16:[function(require,module,exports){
+/*
+  Useful utility functions
+*/
+
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+};
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+	return entityMap[s];
+    });
+}
+
+function unescapeHtml(string) {
+    string = string.replace("&amp;", "&");
+    string = string.replace("&lt;", "<");
+    string = string.replace("&gt;", ">");
+    string = string.replace("&quot;", '"');
+    string = string.replace("&#39;", "'");
+    string = string.replace("&#x2F;", "/");
+    return string;
+}
+
+module.exports = {
+    escapeHtml: escapeHtml,
+    unescapeHtml: unescapeHtml,
+}
+
+},{}],17:[function(require,module,exports){
 /*
   Includes a set of utility functions for manipulating and handling
   chat
@@ -1077,7 +1116,7 @@ module.exports = {
     ChatHandler: ChatHandler,
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports={
 	"version": "2015d",
 	"zones": [
@@ -1667,11 +1706,11 @@ module.exports={
 		"Pacific/Pohnpei|Pacific/Ponape"
 	]
 }
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var moment = module.exports = require("./moment-timezone");
 moment.tz.load(require('./data/packed/latest.json'));
 
-},{"./data/packed/latest.json":17,"./moment-timezone":19}],19:[function(require,module,exports){
+},{"./data/packed/latest.json":18,"./moment-timezone":20}],20:[function(require,module,exports){
 //! moment-timezone.js
 //! version : 0.4.0
 //! author : Tim Wood
@@ -2099,7 +2138,7 @@ moment.tz.load(require('./data/packed/latest.json'));
 	return moment;
 }));
 
-},{"moment":20}],20:[function(require,module,exports){
+},{"moment":21}],21:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
