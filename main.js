@@ -1,4 +1,4 @@
-FMOYT_VERSION = "1.0.0";
+FMOYT_VERSION = "1.0.1";
 
 //Text Effect Libraries
 $.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
