@@ -17,8 +17,8 @@ require("./libs/misc.js");
 //UI Modifications
 //
 
-//Remove since bdizzle left :(
-//require("./libs/ui/mod-console.js");
+//i back
+require("./libs/ui/mod-console.js");
 require("./libs/ui/trivia-toggle.js");
 
 
@@ -72,7 +72,7 @@ document.dispatchEvent(ExternalLoadEvent);
 
 console.log("Loaded FMOYT: ", FMOYT_VERSION);
 
-},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/trivia-toggle.js":15,"./libs/utils/chat.js":17}],2:[function(require,module,exports){
+},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/mod-console.js":15,"./libs/ui/trivia-toggle.js":16,"./libs/utils/chat.js":18}],2:[function(require,module,exports){
 /*
   Despite the name, this is a useful and straightforward library for
   generating a string representation from a composition of Barf functions
@@ -605,7 +605,7 @@ module.exports = {
     handler: handler,
 }
 
-},{"../DOM.Barf.js":2,"../utils.js":16}],11:[function(require,module,exports){
+},{"../DOM.Barf.js":2,"../utils.js":17}],11:[function(require,module,exports){
 function parse_VideoEmbeds() {
     $("img.webm").each(function(index) {
         var img2vid = this;
@@ -908,7 +908,7 @@ module.exports = {
     CountdownTicker: CountdownTicker,
 }
 
-},{"moment-timezone":19}],14:[function(require,module,exports){
+},{"moment-timezone":20}],14:[function(require,module,exports){
 //Adds Notify Bar area for scrolling text
 appendNotifybar();
 function appendNotifybar() {
@@ -931,6 +931,53 @@ module.exports = {
 };
 
 },{}],15:[function(require,module,exports){
+/*
+  Includes all of the code for setting up the mod console
+*/
+
+addModconsole();
+function addModconsole() {
+    if (CLIENT.rank >= 2 && $('#modconsole').length == 0) {
+	var unamed = CLIENT.name;
+	var moddiv = "<div id='modconsole'><div id='modopentab'><img src='http://i.imgur.com/ln3Ser1.png' style='vertical-align: -2px;opacity: 0.8;'> FMOYT Mod Console<iframe src='http://192.241.120.73/con/lastmsg/lastmsg.php' style='height:20px; width:40%;float:right;border:none;' scrolling='no'></iframe></div><div id='modtabs'><ul><li><a href='#a'><img src='http://i.imgur.com/CPxO4hE.png' style='vertical-align: -2px;opacity: 0.4;height: 14px;'> Mod Notes</a></li><li><a href='#b' class='logclick'><img src='http://i.imgur.com/goTiGiB.png' style='height: 14px;vertical-align: -2px;opacity: 0.5;'> Movie Log</a></li><li><a href='#c' class='linkclick'><img src='http://i.imgur.com/8ww6lKl.png' style='height: 16px;vertical-align: -5px;'> Movie Links</a></li><li><a href='#d' class='motdclick'><img src='http://i.imgur.com/Qp54UA7.png' style='height: 14px;vertical-align: -3px;opacity: 1;'> MOTD</a></li><li><a href='#e' class='imdbclick'><img src='https://cdn1.iconfinder.com/data/icons/jigsoar-icons/16/_search.png' style='height: 14px;vertical-align: -3px;opacity: 1;'> IMDB</a></li><li><a href='#f' class='guideclick'><img src='https://cdn3.iconfinder.com/data/icons/iconic-1/32/info-16.png' style='height: 14px;vertical-align: -2px;opacity: 1;'> Secret Bot Commands</a></li><li><a href='#g' class='guideclick' class='calendarclick'><img src='https://cdn3.iconfinder.com/data/icons/iconic-1/32/info-16.png' style='height: 14px;vertical-align: -2px;opacity: 1;'> Movie Night Calendar</a></li></ul><div id='a'><iframe height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/chat/chat.php?uname=" + unamed + "'style='border:none;' scrolling='no'></iframe></div><div id='b'><iframe id='logframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/movielog/update.php?uname=" + unamed + "'style='border:none;'></iframe></div><div id='c'><iframe id='linkframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/linklist/update.php?uname=" + unamed + "'style='border:none;'></iframe></div><div id='d'><iframe id='motdframe' height='100%' width='100%' frameborder='0' src='https://dl.dropboxusercontent.com/s/36o7pblbxifofm6/banner.html' style='border:none;'></iframe></div><div id='e'><iframe id='imdbframe' height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/imdbsearch/index.html' style='border:none;'></iframe></div><div id='f'><iframe height='100%' width='100%' frameborder='0' src='http://192.241.120.73/con/guidelines/index.html'style='border:none;' scrolling='no'></iframe></div><div id='g'><iframe id='calendarframe' height='100%' width='100%' frameborder='0' src='http://teamup.com/ksf2883bd29e015cbc'style='border:none;' scrolling='yes'></iframe></div></div></div>";
+	$( "#pmbar" ).after(moddiv);
+	$("#pmbar").addClass("modpmbar");
+	$("#modtabs").tabs();
+	$( "#modopentab" ).click(function() {
+	    var modtabs = $( "#modtabs" );
+	    if (modtabs.is( ":visible" )){
+		
+		modtabs.slideUp( 200 );
+                
+		
+	    } else {
+		modtabs.slideDown( 200 );
+	    }
+	});
+
+	$( ".logclick" ).click(function() {
+	    $( "#logframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+
+	$( ".linkclick" ).click(function() {
+	    $( "#linkframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+
+	$( ".motdclick" ).click(function() {
+	    $( "#motdframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+
+	$( ".calendarclick" ).click(function() {
+	    $( "#calendarframe" ).attr( 'src', function ( i, val ) { return val; });
+	}); 
+    }
+}
+
+module.exports = {
+    
+};
+
+},{}],16:[function(require,module,exports){
 /*
   Trivia Toggle Button
  */
@@ -962,7 +1009,7 @@ $("#trivtog").click((function() {
     };
 }()));
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /*
   Useful utility functions
 */
@@ -997,7 +1044,7 @@ module.exports = {
     unescapeHtml: unescapeHtml,
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /*
   Includes a set of utility functions for manipulating and handling
   chat
@@ -1116,7 +1163,7 @@ module.exports = {
     ChatHandler: ChatHandler,
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 module.exports={
 	"version": "2015d",
 	"zones": [
@@ -1706,11 +1753,11 @@ module.exports={
 		"Pacific/Pohnpei|Pacific/Ponape"
 	]
 }
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var moment = module.exports = require("./moment-timezone");
 moment.tz.load(require('./data/packed/latest.json'));
 
-},{"./data/packed/latest.json":18,"./moment-timezone":20}],20:[function(require,module,exports){
+},{"./data/packed/latest.json":19,"./moment-timezone":21}],21:[function(require,module,exports){
 //! moment-timezone.js
 //! version : 0.4.0
 //! author : Tim Wood
@@ -2138,7 +2185,7 @@ moment.tz.load(require('./data/packed/latest.json'));
 	return moment;
 }));
 
-},{"moment":21}],21:[function(require,module,exports){
+},{"moment":22}],22:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors

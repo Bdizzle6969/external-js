@@ -16,8 +16,8 @@ require("./libs/misc.js");
 //UI Modifications
 //
 
-//Remove since bdizzle left :(
-//require("./libs/ui/mod-console.js");
+//i back
+require("./libs/ui/mod-console.js");
 require("./libs/ui/trivia-toggle.js");
 
 
