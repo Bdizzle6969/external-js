@@ -1,78 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-FMOYT_VERSION = "1.0.1";
-
-//Text Effect Libraries
-$.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
-$.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
-
-//Text HTML Manipulation Library
-$.getScript("http://benzap.github.io/DOM.Barf/DOM.Barf.js");
-
-//Random Includes
-//TODO: Cleanup
-require("./libs/embed-utils.js");
-require("./libs/misc.js");
-
-//
-//UI Modifications
-//
-
-//i back
-require("./libs/ui/mod-console.js");
-require("./libs/ui/trivia-toggle.js");
-
-
-//Miscellaneous UI Handlers
-// - NotifyBar
-require("./libs/ui/misc-ui.js");
-var CountdownTicker = require("./libs/ui/countdown-ticker.js").CountdownTicker;
-
-var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
-//
-//Chat Handlers
-//
-var DrinkFlair = require("./libs/chat_handlers/drink-flair.js");
-var Rainbow = require("./libs/chat_handlers/rainbow.js");
-require("./libs/chat_handlers/audio-speakz.js");
-require("./libs/chat_handlers/hover-sound.js");
-require("./libs/chat_handlers/boatskip.js");
-require("./libs/chat_handlers/background-changer.js");
-require("./libs/chat_handlers/nick-class-applier.js");
-
-//Miscellaneous Handlers
-// - VideoClick Playlist
-// - Middlescreen Removal
-require("./libs/chat_handlers/misc-handlers.js");
-
-
-/**** Initialization and Global Variables ****/
-FMOYT = {
-    CountdownTicker: new CountdownTicker(document.querySelector("#motdwrap")),
-}
-DOM = require("./libs/DOM.Barf.js").DOM;
-
-//Chat Handler Initialization
-FMOYT.chatHandler = new ChatHandler();
-FMOYT.chatHandler.init();
-
-//Handlers
-FMOYT.chatHandler.add("drink-flair", DrinkFlair.handler);
-FMOYT.chatHandler.add("rainbow", Rainbow.handler);
-
-//Redirect synchtube.me users to the new cytu.be site
-if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
-    location.href = location.protocol + "//cytu.be" + location.pathname;
-}
-
-//Create a custom event called 'external-load' that fires as soon as
-//this external javascript is done firing
-var ExternalLoadEvent = document.createEvent('Event');
-ExternalLoadEvent.initEvent("external-load", true, true);
-document.dispatchEvent(ExternalLoadEvent);
-
-console.log("Loaded FMOYT: ", FMOYT_VERSION);
-
-},{"./libs/DOM.Barf.js":2,"./libs/chat_handlers/audio-speakz.js":3,"./libs/chat_handlers/background-changer.js":4,"./libs/chat_handlers/boatskip.js":5,"./libs/chat_handlers/drink-flair.js":6,"./libs/chat_handlers/hover-sound.js":7,"./libs/chat_handlers/misc-handlers.js":8,"./libs/chat_handlers/nick-class-applier.js":9,"./libs/chat_handlers/rainbow.js":10,"./libs/embed-utils.js":11,"./libs/misc.js":12,"./libs/ui/countdown-ticker.js":13,"./libs/ui/misc-ui.js":14,"./libs/ui/mod-console.js":15,"./libs/ui/trivia-toggle.js":16,"./libs/utils/chat.js":18}],2:[function(require,module,exports){
 /*
   Despite the name, this is a useful and straightforward library for
   generating a string representation from a composition of Barf functions
@@ -339,7 +265,7 @@ module.exports = {
     DOM: DOM
 };
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 
 if ($('#stopaudiobutton').length != 0){
     return;
@@ -387,7 +313,7 @@ module.exports = {
     
 }
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 b3g3();
 function b3g3(){
     $('#messagebuffer').css("background-image","url("+$('.b3g3:last').text()+")");
@@ -397,7 +323,7 @@ socket.on("chatMsg", function() {
     b3g3();
 });
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 
 
 socket.on("chatMsg", function() {
@@ -410,7 +336,7 @@ module.exports = {
 
 };
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*
   Drink Flair and chatMsg fixes
  */
@@ -468,7 +394,7 @@ module.exports = {
     handler: handler,
 };
 
-},{"../DOM.Barf.js":2}],7:[function(require,module,exports){
+},{"../DOM.Barf.js":1}],6:[function(require,module,exports){
 hoverSound();
 function hoverSound() {
     socket.on("chatMsg", function(args) {
@@ -492,7 +418,7 @@ module.exports = {
 
 };
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 
 //Prevent Users from clicking on video URLs in the playlist
 videoclick();
@@ -529,7 +455,7 @@ module.exports = {
     
 };
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 //apply username classes to usernames, hook this to chatMsg so it refreshes
 classApplier();
 function classApplier() {
@@ -551,7 +477,7 @@ module.exports = {
 
 };
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /*
   add rainbow colors to text on screen
 */
@@ -605,7 +531,7 @@ module.exports = {
     handler: handler,
 }
 
-},{"../DOM.Barf.js":2,"../utils.js":17}],11:[function(require,module,exports){
+},{"../DOM.Barf.js":1,"../utils.js":16}],10:[function(require,module,exports){
 function parse_VideoEmbeds() {
     $("img.webm").each(function(index) {
         var img2vid = this;
@@ -681,7 +607,7 @@ module.exports = {
 
 }
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 $(".navbar-brand").text("Full Movies");
 
 var movieLengthSeconds = 6545; //length of the movie in seconds
@@ -854,7 +780,7 @@ module.exports = {
     
 };
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*
   countdown ticker to countdown to theme nights
 */
@@ -908,7 +834,7 @@ module.exports = {
     CountdownTicker: CountdownTicker,
 }
 
-},{"moment-timezone":20}],14:[function(require,module,exports){
+},{"moment-timezone":20}],13:[function(require,module,exports){
 //Adds Notify Bar area for scrolling text
 appendNotifybar();
 function appendNotifybar() {
@@ -930,7 +856,7 @@ module.exports = {
 
 };
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*
   Includes all of the code for setting up the mod console
 */
@@ -977,7 +903,7 @@ module.exports = {
     
 };
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*
   Trivia Toggle Button
  */
@@ -1009,7 +935,7 @@ $("#trivtog").click((function() {
     };
 }()));
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*
   Useful utility functions
 */
@@ -1044,7 +970,7 @@ module.exports = {
     unescapeHtml: unescapeHtml,
 }
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /*
   Includes a set of utility functions for manipulating and handling
   chat
@@ -1163,7 +1089,81 @@ module.exports = {
     ChatHandler: ChatHandler,
 }
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+FMOYT_VERSION = "1.0.1";
+
+//Text Effect Libraries
+$.getScript("http://jschr.github.io/textillate/jquery.textillate.js");
+$.getScript("http://www.crayola.com/application/javascript/libraries/jquery.lettering-0.6.1.min.js");
+
+//Text HTML Manipulation Library
+$.getScript("http://benzap.github.io/DOM.Barf/DOM.Barf.js");
+
+//Random Includes
+//TODO: Cleanup
+require("./libs/embed-utils.js");
+require("./libs/misc.js");
+
+//
+//UI Modifications
+//
+
+//i back
+require("./libs/ui/mod-console.js");
+require("./libs/ui/trivia-toggle.js");
+
+
+//Miscellaneous UI Handlers
+// - NotifyBar
+require("./libs/ui/misc-ui.js");
+var CountdownTicker = require("./libs/ui/countdown-ticker.js").CountdownTicker;
+
+var ChatHandler = require("./libs/utils/chat.js").ChatHandler;
+//
+//Chat Handlers
+//
+var DrinkFlair = require("./libs/chat_handlers/drink-flair.js");
+var Rainbow = require("./libs/chat_handlers/rainbow.js");
+require("./libs/chat_handlers/audio-speakz.js");
+require("./libs/chat_handlers/hover-sound.js");
+require("./libs/chat_handlers/boatskip.js");
+require("./libs/chat_handlers/background-changer.js");
+require("./libs/chat_handlers/nick-class-applier.js");
+
+//Miscellaneous Handlers
+// - VideoClick Playlist
+// - Middlescreen Removal
+require("./libs/chat_handlers/misc-handlers.js");
+
+
+/**** Initialization and Global Variables ****/
+FMOYT = {
+    CountdownTicker: new CountdownTicker(document.querySelector("#motdwrap")),
+}
+DOM = require("./libs/DOM.Barf.js").DOM;
+
+//Chat Handler Initialization
+FMOYT.chatHandler = new ChatHandler();
+FMOYT.chatHandler.init();
+
+//Handlers
+FMOYT.chatHandler.add("drink-flair", DrinkFlair.handler);
+FMOYT.chatHandler.add("rainbow", Rainbow.handler);
+
+//Redirect synchtube.me users to the new cytu.be site
+if (location.host == "synchtube.me" || location.host == "www.synchtube.me") {
+    location.href = location.protocol + "//cytu.be" + location.pathname;
+}
+
+//Create a custom event called 'external-load' that fires as soon as
+//this external javascript is done firing
+var ExternalLoadEvent = document.createEvent('Event');
+ExternalLoadEvent.initEvent("external-load", true, true);
+document.dispatchEvent(ExternalLoadEvent);
+
+console.log("Loaded FMOYT: ", FMOYT_VERSION);
+
+},{"./libs/DOM.Barf.js":1,"./libs/chat_handlers/audio-speakz.js":2,"./libs/chat_handlers/background-changer.js":3,"./libs/chat_handlers/boatskip.js":4,"./libs/chat_handlers/drink-flair.js":5,"./libs/chat_handlers/hover-sound.js":6,"./libs/chat_handlers/misc-handlers.js":7,"./libs/chat_handlers/nick-class-applier.js":8,"./libs/chat_handlers/rainbow.js":9,"./libs/embed-utils.js":10,"./libs/misc.js":11,"./libs/ui/countdown-ticker.js":12,"./libs/ui/misc-ui.js":13,"./libs/ui/mod-console.js":14,"./libs/ui/trivia-toggle.js":15,"./libs/utils/chat.js":17}],19:[function(require,module,exports){
 module.exports={
 	"version": "2015d",
 	"zones": [
@@ -5297,7 +5297,7 @@ moment.tz.load(require('./data/packed/latest.json'));
     return _moment;
 
 }));
-},{}]},{},[1])
+},{}]},{},[18])
 
 
 //# sourceMappingURL=fmoyt-external.js.map
